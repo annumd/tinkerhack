@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login | RushHour</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Student Login</h1>
+        <p class="tagline">Access your canteen orders</p>
+
+        <form onsubmit="loginStudent(event)">
+            <input type="text" class="input-field" placeholder="Register Number / Email" required>
+            <input type="password" class="input-field" placeholder="Password" required>
+
+            <button type="submit" class="btn">Login</button>
+        </form>
+
+        <div class="link">
+            <a href="index.html">⬅ Back to Home</a>
+        </div>
+
+        <div class="footer">
+            RushHour Smart Canteen System
+        </div>
+    </div>
+
+    <script>
+        function loginStudent(event) {
+            event.preventDefault();
+
+            // For now just simulate login
+            alert("Login successful! (Backend will be added later)");
+
+            // Redirect to student dashboard (next step we’ll build)
+            window.location.href = "student_dashboard.html";
+        }
+    </script>
+
+</body>
+</html>
