@@ -1,4 +1,4 @@
-# tinkerhack
+# RushHour
 
 My project "RushHour" is a Smart Canteen Queue and Order Management System designed to reduce rush during peak hours.
 Currently, students have to stand in long queues without knowing how long it will take.
