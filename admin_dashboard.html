@@ -6,84 +6,160 @@
     <title>Admin Dashboard | RushHour</title>
 
     <link rel="stylesheet" href="style.css">
-
-    <style>
-        .orders {
-            margin-top: 20px;
-            text-align: left;
-        }
-
-        .order-card {
-            background: #f5f5f5;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 10px;
-        }
-
-        .order-title {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .status {
-            font-size: 13px;
-            margin: 5px 0;
-        }
-
-        .actions button {
-            margin-right: 6px;
-            margin-top: 6px;
-            padding: 5px 8px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .prepare { background: orange; color: white; }
-        .ready { background: green; color: white; }
-        .delete { background: red; color: white; }
-    </style>
 </head>
 
 <body>
-
-    <div class="container">
-        <h1>Admin Panel 👨‍🍳</h1>
-        <p class="tagline">Manage canteen orders efficiently</p>
-
-        <div id="ordersList" class="orders"></div>
-
-        <div class="link">
-            <a href="index.html">⬅ Logout</a>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">🍴 RushHour</div>
+            <div class="nav-right">
+                <span class="user-name">👨‍💼 Admin</span>
+                <a href="index.html" class="nav-back">Logout</a>
+            </div>
         </div>
-    </div>
+    </nav>
+
+    <!-- DASHBOARD HEADER -->
+    <section class="dashboard-hero">
+        <div class="dashboard-content">
+            <h1>Admin Dashboard 👨‍🍳</h1>
+            <p class="dashboard-tagline">Manage canteen orders efficiently</p>
+        </div>
+    </section>
+
+    <!-- STATISTICS SECTION -->
+    <section class="admin-stats">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-info">
+                    <span class="stat-label">Total Orders</span>
+                    <span class="stat-number" id="totalOrders">3</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⏳</div>
+                <div class="stat-info">
+                    <span class="stat-label">Preparing</span>
+                    <span class="stat-number" id="preparingCount">0</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-info">
+                    <span class="stat-label">Ready</span>
+                    <span class="stat-number" id="readyCount">0</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-info">
+                    <span class="stat-label">Revenue Today</span>
+                    <span class="stat-number">₹6,000</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN DASHBOARD -->
+    <section class="admin-main">
+        <div class="admin-container">
+            <div class="orders-header">
+                <h2>Active Orders</h2>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="filterOrders('all')">All</button>
+                    <button class="filter-btn" onclick="filterOrders('preparing')">Preparing</button>
+                    <button class="filter-btn" onclick="filterOrders('ready')">Ready</button>
+                </div>
+            </div>
+
+            <div id="ordersList" class="orders-grid"></div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 RushHour. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script>
-        // Sample orders (later will come from backend)
         let orders = [
-            { token: 101, item: "Meals", status: "Preparing" },
-            { token: 102, item: "Chicken Fry", status: "Preparing" },
-            { token: 103, item: "Tea", status: "Preparing" }
+            { token: 101, item: "Meals", status: "Preparing", price: 60 },
+            { token: 102, item: "Chicken Fry", status: "Preparing", price: 80 },
+            { token: 103, item: "Tea", status: "Preparing", price: 10 }
         ];
+
+        let currentFilter = 'all';
+
+        function getStatusIcon(status) {
+            switch(status) {
+                case 'Preparing': return '⏳';
+                case 'Ready for Pickup': return '✅';
+                default: return '📦';
+            }
+        }
+
+        function getStatusColor(status) {
+            switch(status) {
+                case 'Preparing': return 'preparing';
+                case 'Ready for Pickup': return 'ready';
+                default: return 'default';
+            }
+        }
 
         function renderOrders() {
             const list = document.getElementById("ordersList");
-            list.innerHTML = "";
+            
+            const filtered = currentFilter === 'all' 
+                ? orders 
+                : orders.filter(o => {
+                    if (currentFilter === 'preparing') return o.status === 'Preparing';
+                    if (currentFilter === 'ready') return o.status === 'Ready for Pickup';
+                    return true;
+                });
 
-            orders.forEach((order, index) => {
-                list.innerHTML += `
-                    <div class="order-card">
-                        <div class="order-title">🎟 Token ${order.token} - ${order.item}</div>
-                        <div class="status">Status: <b>${order.status}</b></div>
+            if (filtered.length === 0) {
+                list.innerHTML = '<div class="no-orders-message">No orders in this category</div>';
+                return;
+            }
 
-                        <div class="actions">
-                            <button class="prepare" onclick="setPreparing(${index})">Preparing</button>
-                            <button class="ready" onclick="setReady(${index})">Ready</button>
-                            <button class="delete" onclick="deleteOrder(${index})">Done</button>
+            list.innerHTML = filtered.map((order, index) => `
+                <div class="order-card">
+                    <div class="order-header">
+                        <div class="token-badge">#${order.token}</div>
+                        <div class="order-item-name">${order.item}</div>
+                        <span class="status-badge ${getStatusColor(order.status)}">${getStatusIcon(order.status)} ${order.status}</span>
+                    </div>
+
+                    <div class="order-body">
+                        <div class="order-details">
+                            <span class="detail-label">Item:</span>
+                            <span class="detail-value">${order.item}</span>
+                        </div>
+                        <div class="order-details">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value">₹${order.price}</span>
                         </div>
                     </div>
-                `;
-            });
+
+                    <div class="order-actions">
+                        <button class="action-btn btn-preparing" onclick="setPreparing(${index})" ${order.status === 'Preparing' ? 'disabled' : ''}>
+                            ⏳ Preparing
+                        </button>
+                        <button class="action-btn btn-ready" onclick="setReady(${index})" ${order.status === 'Ready for Pickup' ? 'disabled' : ''}>
+                            ✅ Ready
+                        </button>
+                        <button class="action-btn btn-done" onclick="deleteOrder(${index})">
+                            🗑 Done
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            updateStats();
         }
 
         function setPreparing(i) {
@@ -99,6 +175,23 @@
         function deleteOrder(i) {
             orders.splice(i, 1);
             renderOrders();
+        }
+
+        function filterOrders(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderOrders();
+        }
+
+        function updateStats() {
+            const total = orders.length;
+            const preparing = orders.filter(o => o.status === 'Preparing').length;
+            const ready = orders.filter(o => o.status === 'Ready for Pickup').length;
+
+            document.getElementById('totalOrders').textContent = total;
+            document.getElementById('preparingCount').textContent = preparing;
+            document.getElementById('readyCount').textContent = ready;
         }
 
         // Initial render
