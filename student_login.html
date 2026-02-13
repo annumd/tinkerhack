@@ -3,72 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login | RushHour</title>
+    <title>Student Login | RushHour</title>
 
     <link rel="stylesheet" href="style.css">
-
-    <style>
-        .input-field {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            outline: none;
-        }
-
-        .link {
-            margin-top: 10px;
-            font-size: 14px;
-        }
-
-        .link a {
-            text-decoration: none;
-            color: #ff5e3a;
-        }
-
-        .link a:hover {
-            text-decoration: underline;
-        }
-    </style>
 </head>
 
 <body>
-
-    <div class="container">
-        <h1>Admin Login 🔐</h1>
-        <p class="tagline">Authorized access only</p>
-
-        <form onsubmit="loginAdmin(event)">
-            <input type="text" id="username" class="input-field" placeholder="Admin Username" required>
-            <input type="password" id="password" class="input-field" placeholder="Password" required>
-
-            <button type="submit" class="btn">Login</button>
-        </form>
-
-        <div class="link">
-            <a href="index.html">⬅ Back to Home</a>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">🍴 RushHour</div>
+            <a href="index.html" class="nav-back">← Back to Home</a>
         </div>
+    </nav>
 
-        <div class="footer">
-            RushHour Smart Canteen System
+    <!-- LOGIN SECTION -->
+    <section class="login-hero">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <h1>Student Login</h1>
+                    <p class="login-subtitle">Access your canteen orders</p>
+                </div>
+
+        <form class="login-form" onsubmit="loginStudent(event)">
+                    <div class="form-group">
+                        <label for="register">Register Number / Email</label>
+                        <input 
+                            type="text" 
+                            id="register"
+                            class="input-field" 
+                            placeholder="Enter your register number or email" 
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input 
+                            type="password" 
+                            id="password"
+                            class="input-field" 
+                            placeholder="Enter your password" 
+                            required
+                        >
+                    </div>
+
+                    <div class="remember-forgot">
+                        <label class="remember">
+                            <input type="checkbox">
+                            Remember me
+                            
+                        </label>
+                        <a href="#" class="forgot-link">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-login">Login</button>
+                </form>
+
+                <div class="signup-link">
+                    Don't have an account? <a href="#">Sign up here</a>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
     <script>
-        function loginAdmin(event) {
+        function loginStudent(event) {
             event.preventDefault();
 
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
+            // For now just simulate login
+            alert("Login successful! (Backend will be added later)");
 
-            // demo credentials
-            if (username === "admin" && password === "1234") {
-                alert("Admin login successful ✅");
-                window.location.href = "admin_dashboard.html";
-            } else {
-                alert("Invalid credentials ❌");
-            }
+            // Redirect to student dashboard (next step we’ll build)
+            window.location.href = "student_dashboard.html";
         }
     </script>
 
