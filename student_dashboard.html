@@ -6,99 +6,182 @@
     <title>Student Dashboard | RushHour</title>
 
     <link rel="stylesheet" href="style.css">
-
-    <style>
-        .menu {
-            text-align: left;
-            margin-top: 20px;
-        }
-
-        .menu-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            margin: 8px 0;
-            border-radius: 8px;
-            background: #f5f5f5;
-        }
-
-        .price {
-            font-weight: bold;
-        }
-
-        .order-btn {
-            padding: 6px 10px;
-            background: #28a745;
-            border: none;
-            color: white;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .order-btn:hover {
-            background: #1e7e34;
-        }
-
-        .token-box {
-            margin-top: 20px;
-            padding: 15px;
-            background: #fff3cd;
-            border-radius: 10px;
-            font-weight: bold;
-            display: none;
-        }
-    </style>
 </head>
 
 <body>
-
-    <div class="container">
-        <h1>Welcome Student 👋</h1>
-        <p class="tagline">Place your order and skip the queue</p>
-
-        <div class="menu">
-            <div class="menu-item">
-                <span>Meals</span>
-                <span class="price">₹60</span>
-                <button class="order-btn" onclick="placeOrder('Meals')">Order</button>
-            </div>
-
-            <div class="menu-item">
-                <span>Chicken Fry</span>
-                <span class="price">₹80</span>
-                <button class="order-btn" onclick="placeOrder('Chicken Fry')">Order</button>
-            </div>
-
-            <div class="menu-item">
-                <span>Fish Fry</span>
-                <span class="price">₹100</span>
-                <button class="order-btn" onclick="placeOrder('Fish Fry')">Order</button>
-            </div>
-
-            <div class="menu-item">
-                <span>Tea</span>
-                <span class="price">₹10</span>
-                <button class="order-btn" onclick="placeOrder('Tea')">Order</button>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">🍴 RushHour</div>
+            <div class="nav-right">
+                <span class="user-name">👤 Student</span>
+                <a href="index.html" class="nav-back">Logout</a>
             </div>
         </div>
+    </nav>
 
-        <div id="tokenBox" class="token-box"></div>
-
-        <div class="link">
-            <a href="index.html">⬅ Logout</a>
+    <!-- DASHBOARD HEADER -->
+    <section class="dashboard-hero">
+        <div class="dashboard-content">
+            <h1>Welcome to RushHour 👋</h1>
+            <p class="dashboard-tagline">Place your order and skip the queue</p>
         </div>
-    </div>
+    </section>
+
+    <!-- TOKEN BOX -->
+    <div id="tokenBox" class="token-notification"></div>
+
+    <!-- MAIN DASHBOARD -->
+    <section class="dashboard-main">
+        <div class="dashboard-container">
+            <!-- QUEUE STATUS -->
+            <div class="queue-status-card">
+                <div class="status-icon">📊</div>
+                <h3>Queue Status</h3>
+                <div class="status-time">
+                    <div class="status-item">
+                        <span>Current Wait Time</span>
+                        <p class="status-value">5-10 mins</p>
+                    </div>
+                    <div class="status-item">
+                        <span>People in Queue</span>
+                        <p class="status-value">12</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MENU SECTION -->
+            <div class="menu-section">
+                <h2>Today's Menu</h2>
+                <div class="menu-grid">
+                    <div class="menu-card">
+                        <div class="menu-icon">🍛</div>
+                        <h3>Meals</h3>
+                        <p class="menu-desc">Rice with curry and vegetables</p>
+                        <div class="menu-details">
+                            <span class="price">₹60</span>
+                            <button class="btn btn-menu" onclick="placeOrder('Meals', 60)">Order</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-card">
+                        <div class="menu-icon">🍗</div>
+                        <h3>Chicken Fry</h3>
+                        <p class="menu-desc">Crispy golden chicken</p>
+                        <div class="menu-details">
+                            <span class="price">₹80</span>
+                            <button class="btn btn-menu" onclick="placeOrder('Chicken Fry', 80)">Order</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-card">
+                        <div class="menu-icon">🐟</div>
+                        <h3>Fish Fry</h3>
+                        <p class="menu-desc">Fresh fish fry specially prepared</p>
+                        <div class="menu-details">
+                            <span class="price">₹100</span>
+                            <button class="btn btn-menu" onclick="placeOrder('Fish Fry', 100)">Order</button>
+                        </div>
+                    </div>
+
+                    <div class="menu-card">
+                        <div class="menu-icon">☕</div>
+                        <h3>Tea</h3>
+                        <p class="menu-desc">Hot refreshing tea</p>
+                        <div class="menu-details">
+                            <span class="price">₹10</span>
+                            <button class="btn btn-menu" onclick="placeOrder('Tea', 10)">Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RECENT ORDERS -->
+            <div class="orders-section">
+                <h2>Your Orders</h2>
+                <div id="ordersList" class="orders-list">
+                    <div class="no-orders">No orders yet. Place your first order!</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 RushHour. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script>
         let currentToken = 100;
+        let orders = [];
 
-        function placeOrder(item) {
+        function placeOrder(item, price) {
             currentToken++;
+            const orderId = currentToken;
 
-            document.getElementById("tokenBox").style.display = "block";
-            document.getElementById("tokenBox").innerHTML =
-                "✅ Order placed for <b>" + item + "</b><br>🎟 Your Token Number: <b>" + currentToken + "</b><br>⏱ Status: Preparing...";
+            // Add to orders list
+            orders.push({
+                id: orderId,
+                item: item,
+                price: price,
+                timestamp: new Date()
+            });
+
+            // Show notification
+            showTokenNotification(item, orderId);
+
+            // Update orders display
+            updateOrdersList();
+        }
+
+        function showTokenNotification(item, token) {
+            const tokenBox = document.getElementById("tokenBox");
+            tokenBox.innerHTML = `
+                <div class="token-success">
+                    <div class="token-icon">✅</div>
+                    <h3>Order Placed Successfully!</h3>
+                    <p><strong>${item}</strong></p>
+                    <div class="token-details">
+                        <div class="token-info">
+                            <span class="label">🎟 Token Number</span>
+                            <span class="value">${token}</span>
+                        </div>
+                        <div class="token-info">
+                            <span class="label">⏱ Status</span>
+                            <span class="value">Preparing...</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            tokenBox.classList.add('show');
+            
+            setTimeout(() => {
+                tokenBox.classList.remove('show');
+            }, 4000);
+        }
+
+        function updateOrdersList() {
+            const ordersList = document.getElementById("ordersList");
+            
+            if (orders.length === 0) {
+                ordersList.innerHTML = '<div class="no-orders">No orders yet. Place your first order!</div>';
+                return;
+            }
+
+            ordersList.innerHTML = orders.map(order => `
+                <div class="order-item">
+                    <div class="order-info">
+                        <h4>${order.item}</h4>
+                        <p class="order-time">Token: #${order.id}</p>
+                    </div>
+                    <div class="order-status">
+                        <span class="status-badge preparing">Preparing</span>
+                        <span class="order-price">₹${order.price}</span>
+                    </div>
+                </div>
+            `).join('');
         }
     </script>
 
