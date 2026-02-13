@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RushHour | Smart Canteen System</title>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>RushHour</h1>
+        <p class="tagline">Skip the queue. Save your time.</p>
+
+        <button class="btn" onclick="goToStudent()">Login as Student</button>
+        <button class="btn" onclick="goToAdmin()">Login as Admin</button>
+
+        <div class="footer">
+            Smart Canteen Queue & Order System
+        </div>
+    </div>
+
+    <script>
+        function goToStudent() {
+            window.location.href = "student_login.html";
+        }
+
+        function goToAdmin() {
+            window.location.href = "admin_login.html";
+        }
+    </script>
+
+</body>
+</html>
