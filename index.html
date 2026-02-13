@@ -10,18 +10,159 @@
 </head>
 
 <body>
-
-    <div class="container">
-        <h1>RushHour</h1>
-        <p class="tagline">Skip the queue. Save your time.</p>
-
-        <button class="btn" onclick="goToStudent()">Login as Student</button>
-        <button class="btn" onclick="goToAdmin()">Login as Admin</button>
-
-        <div class="footer">
-            Smart Canteen Queue & Order System
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">🍴 RushHour</div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#about">About</a>
+            </div>
         </div>
-    </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>RushHour</h1>
+                <p class="tagline">Skip the queue. Save your time.</p>
+                <p class="subtitle">Smart Canteen Queue & Order System</p>
+
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="goToStudent()">
+                        <span class="btn-icon">👤</span>
+                        Login as Student
+                    </button>
+                    <button class="btn btn-secondary" onclick="goToAdmin()">
+                        <span class="btn-icon">⚙️</span>
+                        Login as Admin
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS SECTION -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Daily Users</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">50%</div>
+                <div class="stat-label">Time Saved</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Availability</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="features" id="features">
+        <h2>Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⏱️</div>
+                <h3>Real-Time Queue</h3>
+                <p>Check live queue status and wait times before ordering</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📲</div>
+                <h3>Easy Ordering</h3>
+                <p>Place your order online and pick it up when ready</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💳</div>
+                <h3>Secure Payments</h3>
+                <p>Fast and secure payment options for your convenience</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Analytics</h3>
+                <p>Admin dashboard with real-time metrics and insights</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔔</div>
+                <h3>Notifications</h3>
+                <p>Get instant notifications when your order is ready</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⭐</div>
+                <h3>Ratings</h3>
+                <p>Rate meals and provide feedback for improvement</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works" id="how-it-works">
+        <h2>How It Works</h2>
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Sign Up</h3>
+                <p>Create your account as a student or administrator</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Browse Menu</h3>
+                <p>View available meals and check real-time queue status</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Order</h3>
+                <p>Place your order and make payment securely</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Collect</h3>
+                <p>Receive notification when your order is ready</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="about" id="about">
+        <h2>About RushHour</h2>
+        <div class="about-content">
+            <p>RushHour is a modern canteen management system designed to eliminate long queues and improve the dining experience. Our platform helps students skip the line while providing administrators with powerful tools to manage operations efficiently.</p>
+            <div class="about-features">
+                <div class="about-item">
+                    <span class="about-icon">✓</span>
+                    <span>Reduce waiting time by up to 50%</span>
+                </div>
+                <div class="about-item">
+                    <span class="about-icon">✓</span>
+                    <span>Increase customer satisfaction</span>
+                </div>
+                <div class="about-item">
+                    <span class="about-icon">✓</span>
+                    <span>Better inventory management</span>
+                </div>
+                <div class="about-item">
+                    <span class="about-icon">✓</span>
+                    <span>Detailed analytics and reporting</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 RushHour. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Contact</a>
+            </div>
+        </div>
+    </footer>
 
     <script>
         function goToStudent() {
@@ -31,6 +172,17 @@
         function goToAdmin() {
             window.location.href = "admin_login.html";
         }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
     </script>
 
 </body>
